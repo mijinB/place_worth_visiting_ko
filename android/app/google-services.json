@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "964144303472",
+    "project_id": "placestovisitko",
+    "storage_bucket": "placestovisitko.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964144303472:android:66f82de8fd5cf9a21453b5",
+        "android_client_info": {
+          "package_name": "com.bkmi.place_worth_visiting_ko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964144303472-eocoemqk05egafjk7o81nub7fhue5esb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyVEGKE7QOTBACPWUZM1ydQZQ9kAGA-dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964144303472-eocoemqk05egafjk7o81nub7fhue5esb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
