@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:place_worth_visiting_ko/data/detail_data.dart';
 import 'package:place_worth_visiting_ko/data/disable_info_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +11,7 @@ import 'dart:math' as math;
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceData? placeData;
+  final DetailData detailData;
   final int? index;
   final DatabaseReference? databaseReference;
   final String? id;
@@ -17,6 +19,7 @@ class PlaceDetailPage extends StatefulWidget {
   const PlaceDetailPage({
     super.key,
     required this.placeData,
+    required this.detailData,
     required this.index,
     required this.databaseReference,
     required this.id,
@@ -41,7 +44,7 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
   getDisableInfo() {
     widget.databaseReference!
         .child('place')
-        .child(widget.placeData!.id.toString())
+        .child(widget.placeData!.contentId.toString())
         .onValue
         .listen((event) {
       if (event.snapshot.value != null) {
@@ -152,7 +155,7 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                     );
                     widget.databaseReference!
                         .child('place')
-                        .child(widget.placeData!.id.toString())
+                        .child(widget.placeData!.contentId.toString())
                         .set(disableInfo.toJson())
                         .then((value) {
                       setState(() {
@@ -311,7 +314,7 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
     super.initState();
     widget.databaseReference!
         .child('place')
-        .child(widget.placeData!.id.toString())
+        .child(widget.placeData!.contentId.toString())
         .child('review')
         .onChildAdded
         .listen((event) {
@@ -415,6 +418,12 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                       const SizedBox(
                         height: 40,
                       ),
+                      // Text(
+                      //   widget.detailData.parking!,
+                      //   style: const TextStyle(
+                      //     fontSize: 20,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -467,7 +476,7 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                       if (reviews[index].id == widget.id) {
                         widget.databaseReference!
                             .child('place')
-                            .child(widget.placeData!.id.toString())
+                            .child(widget.placeData!.contentId.toString())
                             .child('review')
                             .child(widget.id!)
                             .remove();
@@ -536,7 +545,8 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                                 );
                                 widget.databaseReference!
                                     .child('place')
-                                    .child(widget.placeData!.id.toString())
+                                    .child(
+                                        widget.placeData!.contentId.toString())
                                     .child('review')
                                     .child(widget.id!)
                                     .set(reviewsData.toJson())

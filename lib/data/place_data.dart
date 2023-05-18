@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class PlaceData {
-  String? id;
+  String? contentId;
   String? mapx;
   String? mapy;
   String? title;
@@ -11,7 +11,7 @@ class PlaceData {
   String? imagePath;
 
   PlaceData({
-    this.id,
+    this.contentId,
     required this.mapx,
     required this.mapy,
     required this.title,
@@ -22,7 +22,7 @@ class PlaceData {
   });
 
   PlaceData.fromJson(Map data)
-      : id = jsonDecode(jsonEncode(data))['contentid'],
+      : contentId = jsonDecode(jsonEncode(data))['contentid'],
         mapx = jsonDecode(jsonEncode(data))['mapx'],
         mapy = jsonDecode(jsonEncode(data))['mapy'],
         title = jsonDecode(jsonEncode(data))['title'],
@@ -33,7 +33,7 @@ class PlaceData {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'contentId': contentId,
       'mapx': mapx,
       'mapy': mapy,
       'title': title,

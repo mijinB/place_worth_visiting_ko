@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:place_worth_visiting_ko/data/detail_data.dart';
 import 'package:place_worth_visiting_ko/data/list_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:place_worth_visiting_ko/main/place_detail_page.dart';
@@ -29,6 +30,7 @@ class _MapPageState extends State<MapPage> {
   List<Map<String, dynamic>> sigunguData = List.empty(growable: true);
   List<DropdownMenuItem<Item>> sublist = List.empty(growable: true);
   List<PlaceData> placeData = List.empty(growable: true);
+  List<DetailData> detailData = List.empty(growable: true);
   ScrollController? _scrollController;
 
   String authKey =
@@ -39,6 +41,7 @@ class _MapPageState extends State<MapPage> {
   Item? contentTypeId;
   int page = 1;
   int totalCount = 0;
+  String contentId = "";
 
   void getAreaList({
     required String area,
@@ -102,6 +105,41 @@ class _MapPageState extends State<MapPage> {
       }
     } catch (error) {
       print(error);
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text('데이터를 불러오는데 실패했어요.'),
+          );
+        },
+      );
+    }
+  }
+
+  void getAreaDetailInfo({
+    required String contentTypeId,
+  }) async {
+    try {
+      print('contenId : $contentId');
+      print('contentTypeId : $contentTypeId');
+
+      final url =
+          'https://apis.data.go.kr/B551011/KorService1/detailIntro1?serviceKey=$authKey&MobileOS=AND&MobileApp=PlaceWorthVisitingKo&_type=json&contentId=$contentId&contentTypeId=$contentTypeId';
+
+      final response = await http.get(Uri.parse(url));
+      print(response);
+      final json = jsonDecode(utf8.decode(response.bodyBytes));
+      List<DetailData> resultData = List.empty(growable: true);
+
+      if (json['response']['header']['resultCode'] == "0000") {
+        json['response']['body']['items']['item'].forEach((element) {
+          resultData.add(DetailData.fromJson(element));
+        });
+        setState(() {
+          detailData.addAll(resultData);
+        });
+      }
+    } catch (error) {
       showDialog(
         context: context,
         builder: (context) {
@@ -327,11 +365,19 @@ class _MapPageState extends State<MapPage> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: InkWell(
-                        onTap: () {
+                        onTapDown: (details) {
+                          print(details);
+                          contentId = placeData[index].contentId!;
+                          getAreaDetailInfo(
+                              contentTypeId:
+                                  (contentTypeId!.typeId).toString());
+                        },
+                        onTapUp: (details) {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => PlaceDetailPage(
                                 placeData: placeData[index],
+                                detailData: detailData[index],
                                 index: index,
                                 databaseReference: widget.databaseReference,
                                 id: widget.id,

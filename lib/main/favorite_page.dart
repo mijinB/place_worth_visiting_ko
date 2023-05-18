@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:place_worth_visiting_ko/data/detail_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:place_worth_visiting_ko/main/place_detail_page.dart';
 import 'package:sqflite/sqflite.dart';
@@ -114,6 +115,9 @@ class _FavoritePageState extends State<FavoritePage> {
                       List<PlaceData> placeList =
                           snapshot.data as List<PlaceData>;
                       PlaceData placeInfo = placeList[index];
+
+                      List<DetailData> detailData =
+                          snapshot.data as List<DetailData>;
                       return Card(
                         child: InkWell(
                           onTap: () {
@@ -121,6 +125,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               MaterialPageRoute(
                                 builder: (context) => PlaceDetailPage(
                                   placeData: placeInfo,
+                                  detailData: detailData[index],
                                   index: index,
                                   databaseReference: widget.databaseReference,
                                   id: widget.id,

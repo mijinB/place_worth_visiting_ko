@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -17,20 +19,20 @@ void main() async {
   );
 
   // 임시 추가
-  //HttpOverrides.global = MyhttpOverrides();
+  HttpOverrides.global = MyhttpOverrides();
 
   runApp(const PlaceWorthVisitingKo());
 }
 
 // 임시 추가
-// class MyhttpOverrides extends HttpOverrides {
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
+class MyhttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 // END 임시 추가
 
 class PlaceWorthVisitingKo extends StatelessWidget {
