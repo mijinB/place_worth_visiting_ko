@@ -9,6 +9,7 @@ class PlaceData {
   String? zipcode;
   String? address;
   String? imagePath;
+  String? contentTypeId;
 
   PlaceData({
     this.contentId,
@@ -19,6 +20,7 @@ class PlaceData {
     required this.zipcode,
     required this.address,
     required this.imagePath,
+    required this.contentTypeId,
   });
 
   PlaceData.fromJson(Map data)
@@ -29,7 +31,8 @@ class PlaceData {
         tel = jsonDecode(jsonEncode(data))['tel'],
         zipcode = jsonDecode(jsonEncode(data))['zipcode'],
         address = jsonDecode(jsonEncode(data))['addr1'],
-        imagePath = jsonDecode(jsonEncode(data))['firstimage'];
+        imagePath = jsonDecode(jsonEncode(data))['firstimage'],
+        contentTypeId = jsonDecode(jsonEncode(data))['contenttypeid'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -41,6 +44,7 @@ class PlaceData {
       'zipcode': zipcode,
       'address': address,
       'imagePath': imagePath,
+      'contentTypeId': contentTypeId,
     };
   }
 }

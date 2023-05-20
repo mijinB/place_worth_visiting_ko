@@ -25,8 +25,8 @@ class _FavoritePageState extends State<FavoritePage> {
   Future<List<PlaceData>>? _placeList;
 
   ImageProvider getImage(String? imagePath) {
-    if (imagePath != null) {
-      return NetworkImage(imagePath);
+    if (imagePath != '') {
+      return NetworkImage(imagePath!);
     } else {
       return const AssetImage('assets/images/location.png');
     }
@@ -62,6 +62,7 @@ class _FavoritePageState extends State<FavoritePage> {
           zipcode: maps[index]['zipcode'].toString(),
           address: maps[index]['address'].toString(),
           imagePath: maps[index]['imagePath'].toString(),
+          contentTypeId: maps[index]['contentTypeId'].toString(),
         );
       },
     );
@@ -125,10 +126,11 @@ class _FavoritePageState extends State<FavoritePage> {
                               MaterialPageRoute(
                                 builder: (context) => PlaceDetailPage(
                                   placeData: placeInfo,
-                                  detailData: detailData[index],
                                   index: index,
                                   databaseReference: widget.databaseReference,
                                   id: widget.id,
+                                  contentId: placeInfo.contentId!,
+                                  contentTypeId: placeInfo.contentTypeId!,
                                 ),
                               ),
                             );
