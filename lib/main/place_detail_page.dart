@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:place_worth_visiting_ko/data/reviews_data.dart';
 import 'dart:math' as math;
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' show parse;
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceData? placeData;
@@ -39,7 +40,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
   Marker? marker;
   List<ReviewsData> reviews = List.empty(growable: true);
   final bool _disableWidget = false;
-  // DisableInfo? _disableInfo;
   double physicalDisable = 0;
   double visualDisable = 0;
 
@@ -231,29 +231,17 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
     }
   }
 
-  // getDisableInfo() {
-  //   widget.databaseReference!
-  //       .child('place')
-  //       .child(widget.placeData!.contentId.toString())
-  //       .onValue
-  //       .listen((event) {
-  //     if (event.snapshot.value != null) {
-  //       _disableInfo = DisableInfo.fromSnapshot(event.snapshot);
+  String RemoveHTMLTag(String html) {
+    try {
+      final document = parse(html);
+      final String parsedString =
+          parse(document.body!.text).documentElement!.text;
 
-  //       if (_disableInfo == null) {
-  //         setState(() {
-  //           _disableWidget = false;
-  //         });
-  //       } else {
-  //         setState(() {
-  //           _disableWidget = true;
-  //         });
-  //       }
-  //     } else {
-  //       print('event.snapshot.value = null');
-  //     }
-  //   });
-  // }
+      return parsedString;
+    } catch (e) {
+      return html;
+    }
+  }
 
   ImageProvider getImage(String? imagePath) {
     if (imagePath != '') {
@@ -262,116 +250,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
       return const AssetImage('assets/images/location.png');
     }
   }
-
-  // Widget setDisableWidget() {
-  //   return Center(
-  //     child: Column(
-  //       children: [
-  //         const SizedBox(
-  //           height: 25,
-  //         ),
-  //         const Text(
-  //           '(점수를 선택하고 \'데이터 저장하기\'를 눌러주세요.)',
-  //           style: TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 13,
-  //           ),
-  //         ),
-  //         const SizedBox(
-  //           height: 10,
-  //         ),
-  //         Text(
-  //           '지체 장애인 이용 점수 : ${physicalDisable.floor()}',
-  //           style: const TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 18,
-  //           ),
-  //         ),
-  //         Padding(
-  //           padding: const EdgeInsets.all(20),
-  //           child: Slider(
-  //             value: physicalDisable,
-  //             min: 0,
-  //             max: 10,
-  //             activeColor: Theme.of(context).focusColor,
-  //             inactiveColor: Colors.white12,
-  //             onChanged: (value) {
-  //               setState(() {
-  //                 physicalDisable = value;
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //         Text(
-  //           '시작 장애인 이용 점수 : ${visualDisable.floor()}',
-  //           style: const TextStyle(
-  //             color: Colors.white,
-  //             fontSize: 18,
-  //           ),
-  //         ),
-  //         Padding(
-  //           padding: const EdgeInsets.all(20),
-  //           child: Slider(
-  //             value: visualDisable,
-  //             min: 0,
-  //             max: 10,
-  //             activeColor: Theme.of(context).focusColor,
-  //             inactiveColor: Colors.white12,
-  //             onChanged: (value) {
-  //               setState(() {
-  //                 visualDisable = value;
-  //               });
-  //             },
-  //           ),
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.end,
-  //           children: [
-  //             SizedBox(
-  //               height: 30,
-  //               width: 110,
-  //               child: ElevatedButton(
-  //                 style: ButtonStyle(
-  //                   backgroundColor: MaterialStateProperty.all(
-  //                     Colors.white,
-  //                   ),
-  //                 ),
-  //                 onPressed: () {
-  //                   DisableInfo disableInfo = DisableInfo(
-  //                     physicalDisable: physicalDisable.floor(),
-  //                     visualDisable: visualDisable.floor(),
-  //                     id: widget.id,
-  //                     createTime: DateTime.now().toIso8601String(),
-  //                   );
-  //                   widget.databaseReference!
-  //                       .child('place')
-  //                       .child(widget.placeData!.contentId.toString())
-  //                       .set(disableInfo.toJson())
-  //                       .then((value) {
-  //                     setState(() {
-  //                       _disableWidget = true;
-  //                     });
-  //                   });
-  //                 },
-  //                 child: const Text(
-  //                   '데이터 저장하기',
-  //                   style: TextStyle(
-  //                     color: Colors.black,
-  //                     fontSize: 12,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               width: 25,
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   getGoogleMap() {
     return SizedBox(
@@ -392,112 +270,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
       ),
     );
   }
-
-  // showDisableWidget() {
-  //   return Center(
-  //     child: Column(
-  //       children: [
-  //         const SizedBox(
-  //           height: 25,
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Image.asset(
-  //               'assets/images/physical_disable.png',
-  //               width: 37,
-  //             ),
-  //             const SizedBox(
-  //               width: 10,
-  //             ),
-  //             Text(
-  //               '지체 장애 이용 점수 : ${_disableInfo!.physicalDisable}',
-  //               style: const TextStyle(
-  //                 color: Colors.white,
-  //                 fontSize: 18,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         const SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Image.asset(
-  //               'assets/images/visual_disable.png',
-  //               width: 37,
-  //             ),
-  //             const SizedBox(
-  //               width: 10,
-  //             ),
-  //             Text(
-  //               '시각 장애 이용 점수 : ${_disableInfo!.visualDisable}',
-  //               style: const TextStyle(
-  //                 color: Colors.white,
-  //                 fontSize: 18,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         const SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.end,
-  //           children: [
-  //             Text(
-  //               '작성자 : ${_disableInfo!.id}',
-  //               style: const TextStyle(
-  //                 fontSize: 12,
-  //                 fontWeight: FontWeight.w100,
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               width: 37,
-  //             ),
-  //           ],
-  //         ),
-  //         const SizedBox(
-  //           height: 10,
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.end,
-  //           children: [
-  //             SizedBox(
-  //               height: 30,
-  //               width: 110,
-  //               child: ElevatedButton(
-  //                 style: ButtonStyle(
-  //                   backgroundColor: MaterialStateProperty.all(
-  //                     Colors.white,
-  //                   ),
-  //                 ),
-  //                 onPressed: () {
-  //                   setState(() {
-  //                     _disableWidget = false;
-  //                   });
-  //                 },
-  //                 child: const Text(
-  //                   '점수 수정하기',
-  //                   style: TextStyle(
-  //                     color: Colors.black,
-  //                     fontSize: 12,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //             const SizedBox(
-  //               width: 25,
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   void initState() {
@@ -535,8 +307,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
       flat: true,
     );
     markers[markerId] = marker!;
-
-    // getDisableInfo();
 
     getAreaDetailInfo(contentTypeId: widget.contentTypeId);
   }
@@ -609,9 +379,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                           ),
                         ),
                         getGoogleMap(),
-                        // _disableWidget == false
-                        //     ? setDisableWidget()
-                        //     : showDisableWidget(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 20,
@@ -621,28 +388,28 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                getGuideInfo()!,
+                                RemoveHTMLTag(getGuideInfo()!),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                 ),
                               ),
                               Text(
-                                getTimeInfo()!,
+                                RemoveHTMLTag(getTimeInfo()!),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                 ),
                               ),
                               Text(
-                                getRestDateInfo()!,
+                                RemoveHTMLTag(getRestDateInfo()!),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                 ),
                               ),
                               Text(
-                                getParkingInfo()!,
+                                RemoveHTMLTag(getParkingInfo()!),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
