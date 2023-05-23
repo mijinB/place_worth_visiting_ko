@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:path/path.dart';
 import 'package:place_worth_visiting_ko/firebase_options.dart';
 import 'package:place_worth_visiting_ko/login_page.dart';
 import 'package:place_worth_visiting_ko/sign_page.dart';
 import 'package:place_worth_visiting_ko/main_page.dart';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() async {
@@ -19,33 +19,33 @@ void main() async {
   );
 
   // 임시 추가
-  // HttpOverrides.global = MyhttpOverrides();
+  HttpOverrides.global = MyhttpOverrides();
 
   runApp(const PlaceWorthVisitingKo());
 }
 
 // 임시 추가
-// class MyhttpOverrides extends HttpOverrides {
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
-// END 임시 추가
+class MyhttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
+// END 임시 추가
 class PlaceWorthVisitingKo extends StatelessWidget {
   Future<Database> initDatabase() async {
     return openDatabase(
       join(
         await getDatabasesPath(),
-        'place_datase.db',
+        'place_database.db',
       ),
       version: 1,
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE place(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, tel TEXT, zipcode TEXT, address TEXT, mapx Number, mapy Number, imagePath TEXT)",
+          "CREATE TABLE place(id INTEGER PRIMARY KEY AUTOINCREMENT, contentId TEXT, mapx TEXT, mapy TEXT, title TEXT, tel TEXT, zipcode TEXT, address TEXT, imagePath TEXT, contentTypeId TEXT)",
         );
       },
     );

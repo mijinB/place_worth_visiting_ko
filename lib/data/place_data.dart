@@ -12,7 +12,7 @@ class PlaceData {
   String? contentTypeId;
 
   PlaceData({
-    this.contentId,
+    required this.contentId,
     required this.mapx,
     required this.mapy,
     required this.title,

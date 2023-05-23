@@ -135,6 +135,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   void insertPlace(Future<Database> db, PlaceData placeInfo) async {
+    print(placeInfo.toMap());
     final Database database = await db;
     await database
         .insert('place', placeInfo.toMap(),
@@ -340,7 +341,7 @@ class _MapPageState extends State<MapPage> {
                   itemBuilder: (context, index) {
                     return Card(
                       child: InkWell(
-                        onTapUp: (details) {
+                        onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => PlaceDetailPage(
@@ -354,7 +355,6 @@ class _MapPageState extends State<MapPage> {
                             ),
                           );
                         },
-                        onTap: () {},
                         onDoubleTap: () {
                           insertPlace(
                             widget.db!,

@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:place_worth_visiting_ko/data/detail_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:place_worth_visiting_ko/main/place_detail_page.dart';
 import 'package:sqflite/sqflite.dart';
@@ -55,6 +54,7 @@ class _FavoritePageState extends State<FavoritePage> {
       maps.length,
       (index) {
         return PlaceData(
+          contentId: maps[index]['contentId'].toString(),
           mapx: maps[index]['mapx'].toString(),
           mapy: maps[index]['mapy'].toString(),
           title: maps[index]['title'].toString(),
@@ -78,8 +78,8 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: const [
+        title: const Row(
+          children: [
             Text(
               '\u{2B50}',
               style: TextStyle(
@@ -116,9 +116,6 @@ class _FavoritePageState extends State<FavoritePage> {
                       List<PlaceData> placeList =
                           snapshot.data as List<PlaceData>;
                       PlaceData placeInfo = placeList[index];
-
-                      List<DetailData> detailData =
-                          snapshot.data as List<DetailData>;
                       return Card(
                         child: InkWell(
                           onTap: () {

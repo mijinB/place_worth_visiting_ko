@@ -39,7 +39,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
   TextEditingController? _reviewTextController;
   Marker? marker;
   List<ReviewsData> reviews = List.empty(growable: true);
-  final bool _disableWidget = false;
   double physicalDisable = 0;
   double visualDisable = 0;
 
