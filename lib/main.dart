@@ -18,13 +18,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // 임시 추가
+  // Test를 위해 임시 추가
   HttpOverrides.global = MyhttpOverrides();
 
   runApp(const PlaceWorthVisitingKo());
 }
 
-// 임시 추가
+// Test를 위해 임시 추가
 class MyhttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
