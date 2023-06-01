@@ -1,5 +1,5 @@
 # places_to_visit_ko
-"한국의 가볼 만한 곳을 쉽게 조회할 수 있는 앱"
+"한국의 가볼 만한 곳을 쉽게 조회할 수 있는 앱📱"
 
 - 회원가입, 로그인 (data관리 : firebase)<br>
 - DropdownButton으로 조회하고 싶은 지역 선택<br>
