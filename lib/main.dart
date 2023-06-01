@@ -33,8 +33,8 @@ class MyhttpOverrides extends HttpOverrides {
           (X509Certificate cert, String host, int port) => true;
   }
 }
-
 // END 임시 추가
+
 class PlaceWorthVisitingKo extends StatelessWidget {
   Future<Database> initDatabase() async {
     return openDatabase(

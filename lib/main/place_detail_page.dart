@@ -51,9 +51,6 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
     required String contentTypeId,
   }) async {
     try {
-      print('contenId : ${widget.contentId}');
-      print('contentTypeId : $contentTypeId');
-
       final url =
           'https://apis.data.go.kr/B551011/KorService1/detailIntro1?serviceKey=$authKey&MobileOS=AND&MobileApp=PlaceWorthVisitingKo&_type=json&contentId=${widget.contentId}&contentTypeId=$contentTypeId';
 

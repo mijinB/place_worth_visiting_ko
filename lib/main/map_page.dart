@@ -205,7 +205,7 @@ class _MapPageState extends State<MapPage> {
                 children: [
                   SizedBox(
                     height: 30,
-                    width: 85,
+                    width: 85 * (MediaQuery.of(context).size.width / 360),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -232,8 +232,8 @@ class _MapPageState extends State<MapPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: 10 * (MediaQuery.of(context).size.width / 360),
                   ),
                 ],
               ),
@@ -269,11 +269,11 @@ class _MapPageState extends State<MapPage> {
                       });
                     },
                   ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: 10 * (MediaQuery.of(context).size.width / 360),
                   ),
                   SizedBox(
-                    width: 110,
+                    width: 100 * (MediaQuery.of(context).size.width / 360),
                     child: DropdownButton(
                       isExpanded: true,
                       dropdownColor: Theme.of(context).primaryColor,
@@ -303,11 +303,11 @@ class _MapPageState extends State<MapPage> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: 10 * (MediaQuery.of(context).size.width / 360),
                   ),
                   SizedBox(
-                    width: 110,
+                    width: 100 * (MediaQuery.of(context).size.width / 360),
                     child: DropdownButton(
                       isExpanded: true,
                       dropdownColor: Theme.of(context).primaryColor,
