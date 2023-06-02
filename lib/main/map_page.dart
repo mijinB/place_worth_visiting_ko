@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:place_worth_visiting_ko/data/content_type_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:place_worth_visiting_ko/main/place_detail_page.dart';
+import 'package:place_worth_visiting_ko/widget/button.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
@@ -203,37 +204,21 @@ class _MapPageState extends State<MapPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    height: 30,
-                    width: MediaQuery.of(context).size.width * 0.27,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Theme.of(context).canvasColor,
-                        ),
-                      ),
-                      onPressed: () {
-                        page = 1;
-                        placeData.clear();
-                        getAreaItemList(
-                          area: areaCode,
-                          sigungu: sigunguCode,
-                          contentTypeId: contentTypeId!.typeId,
-                          page: page,
-                        );
-                        _scrollToTop();
-                      },
-                      child: Text(
-                        '검색하기',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
+                  Button(
+                    buttonColor: Theme.of(context).canvasColor,
+                    textColor: Theme.of(context).primaryColor,
+                    text: '검색하기',
+                    onPressed: () {
+                      page = 1;
+                      placeData.clear();
+                      getAreaItemList(
+                        area: areaCode,
+                        sigungu: sigunguCode,
+                        contentTypeId: contentTypeId!.typeId,
+                        page: page,
+                      );
+                      _scrollToTop();
+                    },
                   ),
                 ],
               ),

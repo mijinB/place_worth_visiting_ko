@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:place_worth_visiting_ko/widget/button.dart';
 
 class SettingPage extends StatefulWidget {
   final DatabaseReference? databaseReference;
@@ -58,27 +59,14 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 30,
-                width: 100,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Colors.white,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/', (route) => false);
-                  },
-                  child: const Text(
-                    '로그아웃',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
+              Button(
+                buttonColor: Colors.white,
+                textColor: Colors.black,
+                text: '로그아웃',
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/', (route) => false);
+                },
               ),
               const SizedBox(
                 height: 50,
@@ -92,73 +80,60 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 30,
-                width: 100,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Colors.white,
-                    ),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text(
-                            '계정 삭제',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+              Button(
+                buttonColor: Colors.white,
+                textColor: Colors.black,
+                text: '회원탈퇴',
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text(
+                          '계정 삭제',
+                          style: TextStyle(
+                            fontSize: 18,
                           ),
-                          content: const Text(
-                            '계정을 삭제하시겠습니까?',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                        ),
+                        content: const Text(
+                          '계정을 삭제하시겠습니까?',
+                          style: TextStyle(
+                            fontSize: 14,
                           ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                widget.databaseReference!
-                                    .child('user')
-                                    .child(widget.id!)
-                                    .remove();
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/', (route) => false);
-                              },
-                              child: Text(
-                                '예',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              widget.databaseReference!
+                                  .child('user')
+                                  .child(widget.id!)
+                                  .remove();
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/', (route) => false);
+                            },
+                            child: Text(
+                              '예',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(
-                                '아니요',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              '아니요',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: const Text(
-                    '회원탈퇴',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
