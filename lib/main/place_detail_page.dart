@@ -9,6 +9,7 @@ import 'package:place_worth_visiting_ko/data/reviews_data.dart';
 import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
+import 'package:place_worth_visiting_ko/widget/detail_text.dart';
 
 class PlaceDetailPage extends StatefulWidget {
   final PlaceData? placeData;
@@ -383,33 +384,17 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                RemoveHTMLTag(getGuideInfo()!),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
+                              DetailText(
+                                text: RemoveHTMLTag(getGuideInfo()!),
                               ),
-                              Text(
-                                RemoveHTMLTag(getTimeInfo()!),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
+                              DetailText(
+                                text: RemoveHTMLTag(getTimeInfo()!),
                               ),
-                              Text(
-                                RemoveHTMLTag(getRestDateInfo()!),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
+                              DetailText(
+                                text: RemoveHTMLTag(getRestDateInfo()!),
                               ),
-                              Text(
-                                RemoveHTMLTag(getParkingInfo()!),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
+                              DetailText(
+                                text: RemoveHTMLTag(getParkingInfo()!),
                               ),
                             ],
                           ),
