@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:place_worth_visiting_ko/data/user_data.dart';
+import 'package:place_worth_visiting_ko/widget/my_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -104,67 +105,22 @@ class _LoginPageState extends State<LoginPage>
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      MyTextField(
                         width: 200,
-                        child: TextField(
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          controller: _idTextController,
-                          maxLines: 1,
-                          cursorColor: Theme.of(context).focusColor,
-                          decoration: InputDecoration(
-                            labelText: '아이디',
-                            labelStyle: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w100,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).focusColor,
-                              ),
-                            ),
-                          ),
-                        ),
+                        text: '아이디',
+                        controller: _idTextController!,
+                        obscureText: false,
+                        hintText: '',
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
+                      MyTextField(
                         width: 200,
-                        child: TextField(
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          controller: _pwTextController,
-                          obscureText: true,
-                          maxLines: 1,
-                          cursorColor: Theme.of(context).focusColor,
-                          decoration: InputDecoration(
-                            labelText: '비밀번호',
-                            labelStyle: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w100,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Theme.of(context).focusColor,
-                              ),
-                            ),
-                          ),
-                        ),
+                        text: '비밀번호',
+                        controller: _pwTextController!,
+                        obscureText: true,
+                        hintText: '',
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

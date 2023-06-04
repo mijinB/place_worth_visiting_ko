@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:place_worth_visiting_ko/widget/button.dart';
+import 'package:place_worth_visiting_ko/widget/my_button.dart';
 
 class SettingPage extends StatefulWidget {
   final DatabaseReference? databaseReference;

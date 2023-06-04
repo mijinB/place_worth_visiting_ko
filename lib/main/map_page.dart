@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:place_worth_visiting_ko/data/content_type_data.dart';
 import 'package:place_worth_visiting_ko/data/place_data.dart';
 import 'package:place_worth_visiting_ko/main/place_detail_page.dart';
-import 'package:place_worth_visiting_ko/widget/button.dart';
+import 'package:place_worth_visiting_ko/widget/my_button.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
