@@ -46,26 +46,23 @@ class _MainPageState extends State<MainPage>
     id = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Hero(
-              tag: 1,
-              child: Image.asset(
-                'assets/images/rainbow.png',
-                width: 38,
-                height: 38,
-                fit: BoxFit.fill,
+        centerTitle: true,
+        title: const Text(
+          '가볼 만한 곳=ko',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () =>
+                Navigator.of(context).pushReplacementNamed('/logIn'),
+            child: const Text(
+              'Log in',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
-            const Text(
-              '가볼 만한 곳=ko',
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
       body: TabBarView(
         controller: controller,

@@ -77,11 +77,11 @@ class PlaceWorthVisitingKo extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginPage(),
-        '/sign': (context) => const SignPage(),
-        '/main': (context) => MainPage(
+        '/': (context) => MainPage(
               database: database,
             ),
+        '/sign': (context) => const SignPage(),
+        '/logIn': (context) => const LoginPage(),
       },
     );
   }

@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage>
                                       if (user.pw == digest.toString()) {
                                         Navigator.of(context)
                                             .pushReplacementNamed(
-                                          '/main',
+                                          '/',
                                           arguments:
                                               _idTextController!.value.text,
                                         );
