@@ -64,27 +64,8 @@ class _SignPageState extends State<SignPage> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
-            title: Row(
-              children: [
-                const SizedBox(
-                  width: 39,
-                ),
-                Hero(
-                  tag: 1,
-                  child: Image.asset(
-                    'assets/images/rainbow.png',
-                    width: 38,
-                    height: 38,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text(
-                  '가볼 만한 곳=ko',
-                ),
-              ],
+            title: const Text(
+              '가볼 만한 곳=ko',
             ),
           ),
           body: Center(
@@ -98,14 +79,28 @@ class _SignPageState extends State<SignPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    '회원가입 \u{1F31F}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        '회원가입',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Image.asset(
+                        'assets/images/rainbow.png',
+                        width: 38,
+                        height: 38,
+                        fit: BoxFit.fill,
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 60,

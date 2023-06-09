@@ -82,112 +82,130 @@ class _LoginPageState extends State<LoginPage>
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(50),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: 1,
-                    child: Image.asset('assets/images/rainbow.png'),
-                  ),
-                  SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: Text(
-                        '가볼 만한 곳=ko',
-                        style: TextStyle(
-                          color: Theme.of(context).canvasColor,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 30,
+                  horizontal: 20,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed('/'),
+                          icon: const Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Image.asset('assets/images/rainbow.png'),
+                    SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: Text(
+                          '가볼 만한 곳=ko',
+                          style: TextStyle(
+                            color: Theme.of(context).canvasColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyTextField(
-                        width: 200,
-                        text: '아이디',
-                        controller: _idTextController!,
-                        obscureText: false,
-                        hintText: '',
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyTextField(
-                        width: 200,
-                        text: '비밀번호',
-                        controller: _pwTextController!,
-                        obscureText: true,
-                        hintText: '',
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/sign');
-                            },
-                            child: const Text(
-                              '회원가입',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MyTextField(
+                          width: 200,
+                          text: '아이디',
+                          controller: _idTextController!,
+                          obscureText: false,
+                          hintText: '',
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MyTextField(
+                          width: 200,
+                          text: '비밀번호',
+                          controller: _pwTextController!,
+                          obscureText: true,
+                          hintText: '',
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/sign');
+                              },
+                              child: const Text(
+                                '회원가입',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              if (_idTextController!.value.text.isEmpty ||
-                                  _pwTextController!.value.text.isEmpty) {
-                                makeDialog('아이디와 비밀번호를 모두 입력해주세요.');
-                              } else {
-                                reference!
-                                    .child(_idTextController!.value.text)
-                                    .onValue
-                                    .listen((event) {
-                                  if (event.snapshot.value == null) {
-                                    makeDialog(
-                                        '\'${_idTextController!.value.text}\'의 회원 정보가 없습니다.');
-                                  } else {
-                                    reference!
-                                        .child(_idTextController!.value.text)
-                                        .onChildAdded
-                                        .listen((event) {
-                                      UserData user =
-                                          UserData.fromSnapshot(event.snapshot);
-                                      var bytes = utf8.encode(
-                                          _pwTextController!.value.text);
-                                      var digest = sha1.convert(bytes);
-                                      if (user.pw == digest.toString()) {
-                                        Navigator.of(context)
-                                            .pushReplacementNamed(
-                                          '/',
-                                          arguments:
-                                              _idTextController!.value.text,
-                                        );
-                                      } else {
-                                        makeDialog('비밀번호를 정확히 입력해주세요.');
-                                      }
-                                    });
-                                  }
-                                });
-                              }
-                            },
-                            child: const Text(
-                              '로그인',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
+                            TextButton(
+                              onPressed: () {
+                                if (_idTextController!.value.text.isEmpty ||
+                                    _pwTextController!.value.text.isEmpty) {
+                                  makeDialog('아이디와 비밀번호를 모두 입력해주세요.');
+                                } else {
+                                  reference!
+                                      .child(_idTextController!.value.text)
+                                      .onValue
+                                      .listen((event) {
+                                    if (event.snapshot.value == null) {
+                                      makeDialog(
+                                          '\'${_idTextController!.value.text}\'의 회원 정보가 없습니다.');
+                                    } else {
+                                      reference!
+                                          .child(_idTextController!.value.text)
+                                          .onChildAdded
+                                          .listen((event) {
+                                        UserData user = UserData.fromSnapshot(
+                                            event.snapshot);
+                                        var bytes = utf8.encode(
+                                            _pwTextController!.value.text);
+                                        var digest = sha1.convert(bytes);
+                                        if (user.pw == digest.toString()) {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                            '/',
+                                            arguments:
+                                                _idTextController!.value.text,
+                                          );
+                                        } else {
+                                          makeDialog('비밀번호를 정확히 입력해주세요.');
+                                        }
+                                      });
+                                    }
+                                  });
+                                }
+                              },
+                              child: const Text(
+                                '로그인',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

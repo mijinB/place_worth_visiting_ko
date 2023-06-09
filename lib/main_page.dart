@@ -46,7 +46,6 @@ class _MainPageState extends State<MainPage>
     id = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text(
           '가볼 만한 곳=ko',
         ),
