@@ -17,6 +17,107 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  void userLogOut() {
+    if (widget.id == null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              '\u{26A0}',
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+                fontSize: 30,
+              ),
+            ),
+            content: const Text(
+              '로그인 상태가 아닙니다.',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      Navigator.of(context).pushNamedAndRemoveUntil('/logIn', (route) => false);
+    }
+  }
+
+  void userWithdrawal() {
+    if (widget.id == null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              '\u{26A0}',
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+                fontSize: 30,
+              ),
+            ),
+            content: const Text(
+              '로그인 상태가 아닙니다.',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              '계정 삭제',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            content: const Text(
+              '계정을 삭제하시겠습니까?',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  widget.databaseReference!
+                      .child('user')
+                      .child(widget.id!)
+                      .remove();
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/', (route) => false);
+                },
+                child: Text(
+                  '예',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  '아니요',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +164,7 @@ class _SettingPageState extends State<SettingPage> {
                 buttonColor: Colors.white,
                 textColor: Colors.black,
                 text: '로그아웃',
-                onPressed: () => Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/', (route) => false),
+                onPressed: () => userLogOut(),
               ),
               const SizedBox(
                 height: 50,
@@ -82,56 +182,7 @@ class _SettingPageState extends State<SettingPage> {
                 buttonColor: Colors.white,
                 textColor: Colors.black,
                 text: '회원탈퇴',
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text(
-                          '계정 삭제',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        content: const Text(
-                          '계정을 삭제하시겠습니까?',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              widget.databaseReference!
-                                  .child('user')
-                                  .child(widget.id!)
-                                  .remove();
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/', (route) => false);
-                            },
-                            child: Text(
-                              '예',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              '아니요',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                onPressed: () => userWithdrawal(),
               ),
             ],
           ),
