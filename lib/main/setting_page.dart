@@ -63,10 +63,8 @@ class _SettingPageState extends State<SettingPage> {
                 buttonColor: Colors.white,
                 textColor: Colors.black,
                 text: '로그아웃',
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/', (route) => false);
-                },
+                onPressed: () => Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/', (route) => false),
               ),
               const SizedBox(
                 height: 50,

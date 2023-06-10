@@ -61,13 +61,6 @@ class _SignPageState extends State<SignPage> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: const Text(
-              '가볼 만한 곳=ko',
-            ),
-          ),
           body: Center(
             child: Container(
               width: 330,
@@ -76,104 +69,118 @@ class _SignPageState extends State<SignPage> {
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(50),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '회원가입',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '회원가입',
+                          style: TextStyle(
+                            color: Theme.of(context).canvasColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Image.asset(
+                          'assets/images/rainbow.png',
+                          width: 38,
+                          height: 38,
+                          fit: BoxFit.fill,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    MyTextField(
+                      width: 280,
+                      text: '아이디',
+                      controller: _idTextController!,
+                      obscureText: false,
+                      hintText: '4글자 이상으로 입력해주세요.',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      width: 280,
+                      text: '비밀번호',
+                      controller: _pwTextController!,
+                      obscureText: true,
+                      hintText: '6글자 이상으로 입력해주세요.',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      width: 280,
+                      text: '비밀번호 확인',
+                      controller: _pwCheckTextController!,
+                      obscureText: true,
+                      hintText: '',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.white,
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Image.asset(
-                        'assets/images/rainbow.png',
-                        width: 38,
-                        height: 38,
-                        fit: BoxFit.fill,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  MyTextField(
-                    width: 280,
-                    text: '아이디',
-                    controller: _idTextController!,
-                    obscureText: false,
-                    hintText: '4글자 이상으로 입력해주세요.',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  MyTextField(
-                    width: 280,
-                    text: '비밀번호',
-                    controller: _pwTextController!,
-                    obscureText: true,
-                    hintText: '6글자 이상으로 입력해주세요.',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  MyTextField(
-                    width: 280,
-                    text: '비밀번호 확인',
-                    controller: _pwCheckTextController!,
-                    obscureText: true,
-                    hintText: '',
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.white,
-                      ),
-                    ),
-                    onPressed: () {
-                      if (_idTextController!.value.text.length >= 4 &&
-                          _pwTextController!.value.text.length >= 6) {
-                        if (_pwTextController!.value.text ==
-                            _pwCheckTextController!.value.text) {
-                          var bytes =
-                              utf8.encode(_pwTextController!.value.text);
-                          var digest = sha1.convert(bytes);
-                          _reference!
-                              .child(_idTextController!.value.text)
-                              .push()
-                              .set(UserData(
-                                id: _idTextController!.value.text,
-                                pw: digest.toString(),
-                                createTime: DateTime.now().toIso8601String(),
-                              ).toJson())
-                              .then((value) => Navigator.of(context).pop());
+                      onPressed: () {
+                        if (_idTextController!.value.text.length >= 4 &&
+                            _pwTextController!.value.text.length >= 6) {
+                          if (_pwTextController!.value.text ==
+                              _pwCheckTextController!.value.text) {
+                            var bytes =
+                                utf8.encode(_pwTextController!.value.text);
+                            var digest = sha1.convert(bytes);
+                            _reference!
+                                .child(_idTextController!.value.text)
+                                .push()
+                                .set(UserData(
+                                  id: _idTextController!.value.text,
+                                  pw: digest.toString(),
+                                  createTime: DateTime.now().toIso8601String(),
+                                ).toJson())
+                                .then((value) => Navigator.of(context).pop());
+                          } else {
+                            makeDialog('\'비밀번호\'와 \'비밀번호 확인\'을 동일하게 입력해주세요.');
+                          }
                         } else {
-                          makeDialog('\'비밀번호\'와 \'비밀번호 확인\'을 동일하게 입력해주세요.');
+                          makeDialog('아이디와 비밀번호를 제한 길이에 맞게 입력해주세요.');
                         }
-                      } else {
-                        makeDialog('아이디와 비밀번호를 제한 길이에 맞게 입력해주세요.');
-                      }
-                    },
-                    child: Text(
-                      '회원가입',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 14,
+                      },
+                      child: Text(
+                        '회원가입',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
