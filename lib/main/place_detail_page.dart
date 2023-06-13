@@ -268,6 +268,91 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
     );
   }
 
+  void createReview() {
+    if (widget.id == null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              '\u{26A0}',
+              style: TextStyle(
+                color: Theme.of(context).focusColor,
+                fontSize: 30,
+              ),
+            ),
+            content: const Text(
+              '로그인 후 작성해주세요. \u{1F60A}',
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              '후기 작성',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            content: TextField(
+              controller: _reviewTextController,
+              cursorColor: Theme.of(context).focusColor,
+              decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).focusColor,
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  ReviewsData reviewsData = ReviewsData(
+                    id: widget.id!,
+                    review: _reviewTextController!.value.text,
+                    createTime: DateTime.now().toIso8601String(),
+                  );
+                  widget.databaseReference!
+                      .child('place')
+                      .child(widget.placeData!.contentId.toString())
+                      .child('review')
+                      .child(widget.id!)
+                      .set(reviewsData.toJson())
+                      .then((value) => Navigator.of(context).pop());
+                },
+                child: Text(
+                  '저장하기',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  '종료하기',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -488,70 +573,7 @@ class _PlaceDetailPageState extends State<PlaceDetailPage> {
                         Colors.white,
                       ),
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text(
-                              '후기 작성',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                            content: TextField(
-                              controller: _reviewTextController,
-                              cursorColor: Theme.of(context).focusColor,
-                              decoration: InputDecoration(
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).focusColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  ReviewsData reviewsData = ReviewsData(
-                                    id: widget.id!,
-                                    review: _reviewTextController!.value.text,
-                                    createTime:
-                                        DateTime.now().toIso8601String(),
-                                  );
-                                  widget.databaseReference!
-                                      .child('place')
-                                      .child(widget.placeData!.contentId
-                                          .toString())
-                                      .child('review')
-                                      .child(widget.id!)
-                                      .set(reviewsData.toJson())
-                                      .then((value) =>
-                                          Navigator.of(context).pop());
-                                },
-                                child: Text(
-                                  '저장하기',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  '종료하기',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                    onPressed: createReview,
                     child: const Text(
                       '후기 작성',
                       style: TextStyle(
